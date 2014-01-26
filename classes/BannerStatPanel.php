@@ -38,6 +38,7 @@ class BannerStatPanel extends \System
     public function __construct()
     {
         parent::__construct();
+        \System::loadLanguageFile('tl_banner_stat_export');
     }
     
     /**
@@ -57,14 +58,31 @@ class BannerStatPanel extends \System
     /**
      * Hook: addStatisticPanelLine 
      * 
-     *
+     * @param insteger    Category ID
      * @return string
      */
-    public function getPanelLine()
+    public function getPanelLine($intCatID)
     {
-        $strContent = '<div class="tl_panel">Hallo Export</div>';
-
-        return $strContent;
+        if ($intCatID > 0  || $intCatID == -1)
+        {
+            return sprintf('
+<div class="tl_panel">
+    <div class="tl_subpanel">
+        <strong>%s %s:</strong>
+        <a class="button tl_submit" style="padding: 2px 12px 2px 13px;" target="_new" title="%s CSV ,   " href="system/modules/banner_statistic_export/export/BannerStatExport.php?tl_field=csvc&amp;tl_katid='.$intCatID.'">CSV ,</a>
+        <a class="button tl_submit" style="padding: 2px 12px 2px 13px;" target="_new" title="%s CSV ;   " href="system/modules/banner_statistic_export/export/BannerStatExport.php?tl_field=csvs&amp;tl_katid='.$intCatID.'">CSV ;</a>
+        <a class="button tl_submit" style="padding: 2px 12px 2px 13px;" target="_new" title="%s Excel ; " href="system/modules/banner_statistic_export/export/BannerStatExport.php?tl_field=excel&amp;tl_katid='.$intCatID.'">Excel</a>
+    </div>
+    <div class="clear"></div>
+</div>
+'           ,$GLOBALS['TL_LANG']['tl_banner_stat']['kat']
+            ,$GLOBALS['TL_LANG']['tl_banner_stat_export']['export']
+            ,$GLOBALS['TL_LANG']['tl_banner_stat_export']['export']
+            ,$GLOBALS['TL_LANG']['tl_banner_stat_export']['export']
+            ,$GLOBALS['TL_LANG']['tl_banner_stat_export']['export']
+            );
+        }
+        return '';
     } // getPanelLine
     
 } // class

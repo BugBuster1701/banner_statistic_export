@@ -4,7 +4,7 @@
  * 
  * Banner Statistik Export
  *
- * wird per export button direkt über formular aufgerufen als popup
+ * wird per export button direkt aufgerufen
  * 
  * @copyright	Glen Langer 2007..2014 <http://www.contao.glen-langer.de>
  * @author      Glen Langer (BugBuster)
@@ -26,7 +26,7 @@ require('../../../initialize.php');
  * @author      Glen Langer (BugBuster)
  * @package    BannerStatisticExport
  */
-class BannerStatExport extends Backend // Backend bringt DB mit
+class BannerStatExport extends Backend 
 {
     /**
 	 * Export Type
@@ -46,37 +46,37 @@ class BannerStatExport extends Backend // Backend bringt DB mit
 		$this->import('BackendUser', 'User');
 		parent::__construct(); 
 		$this->User->authenticate(); 
-	    $this->loadLanguageFile('default');
-		$this->loadLanguageFile('modules');
-		$this->loadLanguageFile('tl_banner'); 
+	    System::loadLanguageFile('default');
+		System::loadLanguageFile('modules');
+		System::loadLanguageFile('tl_banner_stat'); 
+		System::loadLanguageFile('tl_banner_stat_export');
 	}
 	
     // Die parametrisierte Factorymethode
     public function factory($type)
     {
-        if (@include(realpath(dirname(__FILE__)) . '/' . $type . '.php')) {
-            $classname = 'BannerStatExport' . $type;
-            return new $classname;
-        } else {
-            return false;
-        }
+        $classname = 'BannerStatExport' . $type;
+        return new $classname;
     }
 
     public function run()
 	{
-   	    if ( (!$this->Input->get('tl_field',true)=='csvc') && 
-   	         (!$this->Input->get('tl_field',true)=='csvs') && 
-   	         (!$this->Input->get('tl_field',true)=='excel') 
-   	       ) {
+   	    if ( (!Input::get('tl_field',true)=='csvc') && 
+   	         (!Input::get('tl_field',true)=='csvs') && 
+   	         (!Input::get('tl_field',true)=='excel') 
+   	       ) 
+   	    {
    	        echo "<html><body>Missing Parameter(s)!</body></html>";
             return ;
 	    }
-	    if ((int)$this->Input->get('tl_katid',true) < -1 || (int)$this->Input->get('tl_katid',true) == 0) {
+	    if ((int)Input::get('tl_katid',true) < -1 || (int)Input::get('tl_katid',true) == 0) 
+	    {
 	    	echo "<html><body>Wrong Parameter(s)!</body></html>";
             return ;
 	    }
-	    $intBannerKatId = (int)$this->Input->get('tl_katid',true);
-	    switch ($this->Input->get('tl_field',true)) {
+	    $intBannerKatId = (int)Input::get('tl_katid',true);
+	    switch (Input::get('tl_field',true)) 
+	    {
 	    	case "csvc":
                 $this->strExportType = 'csv';
 	    	    $this->strExportDelimiter = ',';
@@ -93,25 +93,70 @@ class BannerStatExport extends Backend // Backend bringt DB mit
 	    		break;
 	    }
 	    $objExport = BannerStatExport::factory($this->strExportType);
-	    if ($objExport===false) {
+	    if ($objExport===false) 
+	    {
             echo "<html><body>Driver ".$this->strExportType." not found!</body></html>";
 	    	return ;
 	    }
-	    if ($intBannerKatId == -1) {
-	   	    $objBanners = $this->Database->prepare("SELECT tbc.title, tb.id, tb.banner_type, tb.banner_name, tb.banner_url, tb.banner_image, tb.banner_image_extern, tb.banner_weighting, tb.banner_start, tb.banner_stop, tb.banner_published, tbs.banner_views, tbs.banner_clicks"
-			                                     . " FROM tl_banner AS tb"
-			                                     . " LEFT JOIN tl_banner_stat AS tbs ON (tbs.id=tb.id)"
-	                                             . " LEFT JOIN tl_banner_category AS tbc ON (tbc.id=tb.pid)"
-	                                             . " ORDER BY tbc.id, tbc.title, tb.id")
-						                 ->execute();
-	    } else {
-	   	    $objBanners = $this->Database->prepare("SELECT tbc.title, tb.id, tb.banner_type, tb.banner_name, tb.banner_url, tb.banner_image, tb.banner_image_extern, tb.banner_weighting, tb.banner_start, tb.banner_stop, tb.banner_published, tbs.banner_views, tbs.banner_clicks"
-			                                     . " FROM tl_banner AS tb"
-			                                     . " LEFT JOIN tl_banner_stat AS tbs ON (tbs.id=tb.id)"
-	                                             . " LEFT JOIN tl_banner_category AS tbc ON (tbc.id=tb.pid)"
-	                                             . " WHERE tbc.id =?"
-	                                             . " ORDER BY tbc.title, tb.id")
-						                 ->execute($intBannerKatId);
+	    if ($intBannerKatId == -1) 
+	    {
+	   	    $objBanners = Database::getInstance()
+	   	                    ->prepare("SELECT 
+	   	                                    tbc.title
+	   	                                  , tb.id
+	   	                                  , tb.banner_type
+	   	                                  , tb.banner_name
+	   	                                  , tb.banner_url
+	   	                                  , tb.banner_image
+	   	                                  , tb.banner_image_extern
+	   	                                  , tb.banner_weighting
+	   	                                  , tb.banner_start
+	   	                                  , tb.banner_stop
+	   	                                  , tb.banner_published
+	   	                                  , tbs.banner_views
+	   	                                  , tbs.banner_clicks
+	   	                                FROM 
+	   	                                    tl_banner AS tb
+	   	                                LEFT JOIN 
+	   	                                    tl_banner_stat AS tbs ON (tbs.id=tb.id)
+	   	                                LEFT JOIN 
+	   	                                    tl_banner_category AS tbc ON (tbc.id=tb.pid)
+	   	                                ORDER BY 
+	   	                                    tbc.id
+	   	                                  , tbc.title
+	   	                                  , tb.id"
+	   	                            )
+                            ->execute();
+	    } 
+	    else 
+	    {
+	   	    $objBanners = Database::getInstance()
+	   	                    ->prepare("SELECT 
+                                            tbc.title
+	   	                                  , tb.id
+	   	                                  , tb.banner_type
+	   	                                  , tb.banner_name
+	   	                                  , tb.banner_url
+	   	                                  , tb.banner_image
+	   	                                  , tb.banner_image_extern
+	   	                                  , tb.banner_weighting
+	   	                                  , tb.banner_start
+	   	                                  , tb.banner_stop
+	   	                                  , tb.banner_published
+	   	                                  , tbs.banner_views
+	   	                                  , tbs.banner_clicks
+	   	                                FROM 
+	   	                                    tl_banner AS tb
+	   	                                LEFT JOIN 
+	   	                                    tl_banner_stat AS tbs ON (tbs.id=tb.id)
+	   	                                LEFT JOIN 
+	   	                                    tl_banner_category AS tbc ON (tbc.id=tb.pid)
+	   	                                WHERE 
+	   	                                    tbc.id =?
+	   	                                ORDER BY 
+	   	                                    tbc.title, tb.id"
+	   	                            )
+                            ->execute($intBannerKatId);
 	    }
 	    $objExport->export($objBanners,$this->strExportDelimiter,$intBannerKatId);
 	}
@@ -122,5 +167,3 @@ class BannerStatExport extends Backend // Backend bringt DB mit
  */
 $objBannerStatExport = new BannerStatExport();
 $objBannerStatExport->run();
-
-?>

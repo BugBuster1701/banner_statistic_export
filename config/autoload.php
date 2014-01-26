@@ -26,6 +26,8 @@ ClassLoader::addNamespaces(array
 ClassLoader::addClasses(array
 (
 	// Export
+	'BannerStatExportcsv'                          => 'system/modules/banner_statistic_export/export/BannerStatExportcsv.php',
+	'BannerStatExportexcel95'                      => 'system/modules/banner_statistic_export/export/BannerStatExportexcel95.php',
 	'BannerStatExport'                             => 'system/modules/banner_statistic_export/export/BannerStatExport.php',
 
 	// Classes
