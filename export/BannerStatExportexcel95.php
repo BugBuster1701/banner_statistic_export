@@ -16,14 +16,14 @@
 /**
  * Class BannerStatExportexcel
  *
- * @copyright  Glen Langer 2007..2011
- * @author     Glen Langer
- * @package    Banner
+ * @copyright	Glen Langer 2007..2014 <http://www.contao.glen-langer.de>
+ * @author      Glen Langer (BugBuster)
+ * @package     BannerStatisticExport 
  */
 class BannerStatExportexcel95
 {
     protected $BannerExportLib = 'excel95';
-    protected $BrowserAgent ='';
+    protected $BrowserAgent ='NOIE';
     
     /**
 	 * Constructor
@@ -31,16 +31,11 @@ class BannerStatExportexcel95
 	public function __construct()
 	{
 	    //IE or other?
-	    $log_version ='';
-        $HTTP_USER_AGENT = getenv("HTTP_USER_AGENT");
-        if (preg_match('@MSIE ([0-9].[0-9]{1,2})@', $HTTP_USER_AGENT, $log_version)) 
-        {
-            $this->BrowserAgent = 'IE';
-        } 
-        else 
-        {
-            $this->BrowserAgent = 'NOIE';
-        }
+	    $ua = Environment::get('agent')->shorty;
+	    if ($ua == 'ie')
+	    {
+	        $this->BrowserAgent = 'IE';
+	    }
 	}
 	
     public function getLibName() 
@@ -55,9 +50,9 @@ class BannerStatExportexcel95
         {
         	$intBannerKatId = 'all';
         }
-        if (file_exists(TL_ROOT . "/plugins/xls_export/xls_export.php")) 
-        {
-	    	include(TL_ROOT . "/plugins/xls_export/xls_export.php");
+        if (file_exists(TL_ROOT . "/system/modules/xls_export/vendor/xls_export.php")) 
+    	{
+	    	include(TL_ROOT . "/system/modules/xls_export/vendor/xls_export.php");
 			$xls = new xlsexport();
 			$sheet = 'BannerStatExport-'.$intBannerKatId.'';
 			$xls->addworksheet($sheet);
@@ -73,7 +68,15 @@ class BannerStatExportexcel95
 			
 			while ($objBanners->next())
 	        {
-	        	$objBanners->banner_image = ($objBanners->banner_type == 'banner_image') ? $objBanners->banner_image : $objBanners->banner_image_extern;
+	        	if ($objBanners->banner_type == 'banner_image')
+	        	{
+	        	    $objFile = FilesModel::findByPk($objBanners->banner_image);
+	        	    $objBanners->banner_image = $objFile->path;
+	        	}
+	        	else
+	        	{
+	        	    $objBanners->banner_image = $objBanners->banner_image_extern;
+	        	}
 	        	$arrBannersStat[0] = utf8_decode($objBanners->title);
 	            $arrBannersStat[1] = $objBanners->id;
 	    		$arrBannersStat[2] = utf8_decode($objBanners->banner_name);
