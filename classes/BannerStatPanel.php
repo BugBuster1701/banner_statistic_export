@@ -20,9 +20,9 @@ namespace BugBuster\Banner\Stat\Export;
 /**
  * Class BannerStatPanel
  *
- * @copyright  Glen Langer 2012
- * @author     Glen Langer
- * @package    Banner
+ * @copyright	Glen Langer 2014 <http://www.contao.glen-langer.de>
+ * @author      Glen Langer (BugBuster)
+ * @package     BannerStatisticExport 
  */
 class BannerStatPanel extends \System
 {

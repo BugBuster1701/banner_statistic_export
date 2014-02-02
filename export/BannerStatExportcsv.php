@@ -16,14 +16,14 @@
 /**
  * Class BannerStatExportcsv
  *
- * @copyright  Glen Langer 2007..2010
- * @author     Glen Langer
- * @package    Banner
+ * @copyright	Glen Langer 2007..2014 <http://www.contao.glen-langer.de>
+ * @author      Glen Langer (BugBuster)
+ * @package     BannerStatisticExport 
  */
 class BannerStatExportcsv
 {
     protected $BannerExportLib = 'csv';
-    protected $BrowserAgent ='';
+    protected $BrowserAgent ='NOIE';
     
     /**
 	 * Constructor
@@ -31,16 +31,11 @@ class BannerStatExportcsv
 	public function __construct()
 	{
 	    //IE or other?
-	    $log_version ='';
-        $HTTP_USER_AGENT = getenv("HTTP_USER_AGENT");
-        if (preg_match('@MSIE ([0-9].[0-9]{1,2})@', $HTTP_USER_AGENT, $log_version)) 
-        {
-            $this->BrowserAgent = 'IE';
-        } 
-        else 
-        {
-            $this->BrowserAgent = 'NOIE';
-        }
+	    $ua = Environment::get('agent')->shorty;
+	    if ($ua == 'ie') 
+	    {
+	        $this->BrowserAgent = 'IE';
+	    }
 	}
 	
     public function getLibName() 
@@ -77,11 +72,15 @@ class BannerStatExportcsv
         //Daten
         while ($objBanners->next())
         {
+            if ($objBanners->banner_type == 'banner_image') 
+            {
+                $objFile = FilesModel::findByPk($objBanners->banner_image);
+            }
             $arrBannersStat[] = $objBanners->title;
             $arrBannersStat[] = $objBanners->id;
     		$arrBannersStat[] = $objBanners->banner_name;
     		$arrBannersStat[] = $objBanners->banner_url;
-    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objBanners->banner_image : $objBanners->banner_image_extern;
+    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objFile->path : $objBanners->banner_image_extern;
     		$arrBannersStat[] = $objBanners->banner_weighting;
     		$arrBannersStat[] = $objBanners->banner_start=='' ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_start);
     		$arrBannersStat[] = $objBanners->banner_stop==''  ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_stop);
@@ -90,6 +89,7 @@ class BannerStatExportcsv
     		$arrBannersStat[] = $objBanners->banner_clicks=='' ? 0 : $objBanners->banner_clicks;
             fputcsv($out, $arrBannersStat, $csv_delimiter, $csv_enclosure);
             unset($arrBannersStat);
+            unset($objFile);
         }
         fclose($out);
     }

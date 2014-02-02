@@ -1,19 +1,15 @@
 <?php 
 /**
- * Contao Open Source CMS
- * Copyright (C) 2005-2012 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
  *
- * Formerly known as TYPOlight Open Source CMS.
- * 
- * Modul Banner Sprachdateien
+ * Modul Banner Statistic Export Sprachdateien
  *
  * Statistic language file (de).
  *
- * PHP version 5
- * @copyright  Glen Langer 2007..2012
- * @author     Glen Langer 
- * @package    BannerLanguage 
- * @license    GPL 
+ * @copyright	Glen Langer 2007..2014 <http://www.contao.glen-langer.de>
+ * @author      Glen Langer (BugBuster)
+ * @package     BannerStatisticExport 
+ * @license     LGPL 
  * @filesource
  */
 
