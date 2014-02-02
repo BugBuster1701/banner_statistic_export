@@ -79,8 +79,8 @@ class BannerStatExportcsv
             $arrBannersStat[] = $objBanners->title;
             $arrBannersStat[] = $objBanners->id;
     		$arrBannersStat[] = $objBanners->banner_name;
-    		$arrBannersStat[] = $objBanners->banner_url;
-    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objFile->path : $objBanners->banner_image_extern;
+    		$arrBannersStat[] = html_entity_decode($objBanners->banner_url, ENT_NOQUOTES, 'UTF-8');
+    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objFile->path : html_entity_decode($objBanners->banner_image_extern, ENT_NOQUOTES, 'UTF-8');
     		$arrBannersStat[] = $objBanners->banner_weighting;
     		$arrBannersStat[] = $objBanners->banner_start=='' ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_start);
     		$arrBannersStat[] = $objBanners->banner_stop==''  ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_stop);
