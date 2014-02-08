@@ -1,4 +1,6 @@
 <?php
+use Contao\Idna;
+
 /**
  * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
  * 
@@ -79,8 +81,8 @@ class BannerStatExportcsv
             $arrBannersStat[] = $objBanners->title;
             $arrBannersStat[] = $objBanners->id;
     		$arrBannersStat[] = $objBanners->banner_name;
-    		$arrBannersStat[] = html_entity_decode($objBanners->banner_url, ENT_NOQUOTES, 'UTF-8');
-    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objFile->path : html_entity_decode($objBanners->banner_image_extern, ENT_NOQUOTES, 'UTF-8');
+    		$arrBannersStat[] = Idna::decode($objBanners->banner_url); // #7
+    		$arrBannersStat[] = ($objBanners->banner_type == 'banner_image') ? $objFile->path : Idna::decode($objBanners->banner_image_extern); // #7
     		$arrBannersStat[] = $objBanners->banner_weighting;
     		$arrBannersStat[] = $objBanners->banner_start=='' ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_start);
     		$arrBannersStat[] = $objBanners->banner_stop==''  ? '' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_stop);

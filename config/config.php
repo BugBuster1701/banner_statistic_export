@@ -13,7 +13,7 @@
  */
 
 define('BANNER_STAT_EXPORT_VERSION', '1.0');
-define('BANNER_STAT_EXPORT_BUILD'  , '0');
+define('BANNER_STAT_EXPORT_BUILD'  , '1');
 
 /**
  * -------------------------------------------------------------------------
