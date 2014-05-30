@@ -1,6 +1,6 @@
 {
 	"name":"bugbuster/banner_statistic_export",
-	"description":"A banner advertisement module add-on "Statistic Export" for Contao CMS ",
+	"description":"A banner advertisement module add-on 'Statistic Export' for Contao CMS ",
 	"keywords":["contao","banner","advertisement","export","statistic","csv"],
 	"type":"contao-module",
 	"homepage":"http://www.contao.glen-langer.de",
@@ -22,7 +22,7 @@
 	"require":{
 		"php":">=5.3",
 		"contao/core":">=3.2,<4",
-		"contao-community-alliance/composer-installer":"*",
+		"contao-community-alliance/composer-plugin": "*",
 		"bugbuster/banner":">=3.3.1,<4",
 		"contao-legacy/xls_export":"~3.0"
 	},
