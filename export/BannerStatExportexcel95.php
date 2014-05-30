@@ -82,8 +82,8 @@ class BannerStatExportexcel95
 	        	$arrBannersStat[0] = utf8_decode($objBanners->title);
 	            $arrBannersStat[1] = $objBanners->id;
 	    		$arrBannersStat[2] = utf8_decode($objBanners->banner_name);
-	    		$arrBannersStat[3] = Idna::decode($objBanners->banner_url); // #7
-	    		$arrBannersStat[4] = $objBanners->banner_image; // #7
+	    		$arrBannersStat[3] = utf8_decode(Idna::decode($objBanners->banner_url)); // #7
+	    		$arrBannersStat[4] = utf8_decode(Idna::decode($objBanners->banner_image)); // #7
 	    		$arrBannersStat[5] = $objBanners->banner_weighting;
 	    		$arrBannersStat[6] = $objBanners->banner_start=='' ? 'NULL' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_start);
 	    		$arrBannersStat[7] = $objBanners->banner_stop==''  ? 'NULL' : date($GLOBALS['TL_CONFIG']['datimFormat'], $objBanners->banner_stop);

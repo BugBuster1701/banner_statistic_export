@@ -52,7 +52,8 @@ class BannerStatExportcsv
         {
         	$intBannerKatId = 'all';
         }
-        header('Content-Type: text/comma-separated-values; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
+        //header('Content-Type: text/comma-separated-values; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
+        header('Content-Type: text/csv; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
         header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
         header('Content-Disposition: attachment; filename="BannerStatExport-'.$intBannerKatId.'.utf8.csv"');
         if ($this->BrowserAgent == 'IE') 
@@ -78,7 +79,7 @@ class BannerStatExportcsv
             {
                 $objFile = FilesModel::findByPk($objBanners->banner_image);
             }
-            $arrBannersStat[] = $objBanners->title;
+            $arrBannersStat[] = utf8_decode($objBanners->title);
             $arrBannersStat[] = $objBanners->id;
     		$arrBannersStat[] = $objBanners->banner_name;
     		$arrBannersStat[] = Idna::decode($objBanners->banner_url); // #7
