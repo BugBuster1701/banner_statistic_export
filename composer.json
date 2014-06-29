@@ -36,6 +36,12 @@
 		"contao":{
 			"sources":{
 				"":"system/modules/banner_statistic_export"
+			},
+			"transifex": {
+				"project": "contao-banner_statistic_export",
+				"prefix": "master-",
+				"languages_cto": "languages",
+				"languages_tx": ".tx"
 			}
 		}
 	}

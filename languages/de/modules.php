@@ -1,21 +1,17 @@
-<?php 
+<?php
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
- * 
- * Modul Banner Statistic Export Sprachdateien
- * 
- * Language file for modules (de).
+ * Translations are managed using Transifex. To create a new translation
+ * or to help to maintain an existing one, please register at transifex.com.
  *
- * @copyright	Glen Langer 2007..2014 <http://www.contao.glen-langer.de>
- * @author      Glen Langer (BugBuster)
- * @package     BannerStatisticExport 
- * @license     LGPL 
- * @filesource
+ * @link http://help.transifex.com/intro/translating.html
+ * @link https://www.transifex.com/projects/p/contao-banner_statistic_export/language/de/
+ *
+ * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
+ *
+ * last-updated: 2014-06-29T16:42:10+02:00
  */
 
 
-/**
- * Back end modules
- */
-$GLOBALS['TL_LANG']['MOD']['banner_statistic_export'][0] = 'Banner Add-on Statistik Export';
-$GLOBALS['TL_LANG']['MOD']['banner_statistic_export'][1] = 'Export der Statistik ermöglichen.';
+$GLOBALS['TL_LANG']['MOD']['banner_statistic_export']['0'] = 'Banner Add-on Statistik Export';
+$GLOBALS['TL_LANG']['MOD']['banner_statistic_export']['1'] = 'Export der Statistik ermöglichen.';
+

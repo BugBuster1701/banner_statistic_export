@@ -4,6 +4,13 @@ Banner Statistic Export
 
 Contao Banner Advertisement Module Add-on: Statistic Export
 
+## For Translators
+Translations are managed using Transifex. To create a new translation or to help to maintain an existing one, please register at transifex.com.
+
+Project Link: [https://www.transifex.com/projects/p/contao-banner_statistic_export/](https://www.transifex.com/projects/p/contao-banner_statistic_export/)
+
+Howto: [http://help.transifex.com/intro/translating.html](http://help.transifex.com/intro/translating.html)
+
 ## Requirements
 * PHP 5.3.4 or higher
 * Contao 3.2.* or higher
